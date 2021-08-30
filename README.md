@@ -1,6 +1,7 @@
 # vachineBook
 มินิโปรเจคเป็นการฝึกพัฒนา res-api (laravel Lumen) กับ vue 3
 
+วีดีโอรีวิว https://drive.google.com/file/d/17fJBrQ-PJ_vl8heg1COJN2ctP85lV_-b/view?usp=sharing
 
 Folder app-api 
 คือ Laravel Lumen ผู้พัฒนาใช้ php เวอร์ชั่น 8 ในการพัฒนา

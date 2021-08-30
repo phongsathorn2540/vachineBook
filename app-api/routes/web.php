@@ -19,8 +19,10 @@ $router->get('/', function () use ($router) {
 
 $router->post('booking', 'BookingController@createBooking');
 $router->post('checkemail', 'BookingController@checkEmail');
+$router->post('updateemail', 'BookingController@updateEmail');
 $router->post('checkphone', 'BookingController@checkPhone');
 $router->post('checkidcard', 'BookingController@checkIdCard');
+$router->post('updateidcard', 'BookingController@updateIdCard');
 $router->post('createotp', 'OtpController@createOTP');
 $router->post('confirmotp', 'OtpController@confirmOTP');
 $router->get('booking/{phone}', 'BookingController@getBookingbyUser');

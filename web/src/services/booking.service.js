@@ -15,8 +15,19 @@ class BookingService {
   async confirmOTP(data) {
     return await axios.post(API_URL + 'confirmotp', data)
   }
-  async checkIDCard(data) {
+
+  async checkid(data) {
     return await axios.post(API_URL + 'checkidcard', data)
+  }
+  async updateid(data) {
+    return await axios.post(API_URL + 'updateidcard', data)
+  }
+
+  async checkemail(data) {
+    return await axios.post(API_URL + 'checkemail', data)
+  }
+  async updateemail(data) {
+    return await axios.post(API_URL + 'updateemail', data)
   }
 
   async loginbyOTP(data) {

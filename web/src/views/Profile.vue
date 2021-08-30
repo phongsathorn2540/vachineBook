@@ -2,9 +2,19 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-12 d-flex justify-content-center">
-        <div class="card mt-5" style="max-width:400px">
+        <div class="card mt-5" style="max-width:450px">
           <div class="card-body">
-            <button type="button" class="btn btn-dark btn-sm mb-4" data-bs-toggle="modal" data-bs-target="#updateProfile">อัพเดทโปรไฟล์</button>
+            <div class="row">
+              <div class="col-4">
+                <button type="button" class="btn btn-dark btn-sm mb-4" data-bs-toggle="modal" data-bs-target="#updateProfile">อัพเดทโปรไฟล์</button>
+              </div>
+              <div class="col-4">
+                <button type="button" class="btn btn-dark btn-sm mb-4" v-on:click="updateIdCard">อัพเดทหมายเลข 13 หลัก</button>
+              </div>
+              <div class="col-4">
+                <button type="button" class="btn btn-dark btn-sm mb-4" v-on:click="updateEmail">อัพเดทอีเมล</button>
+              </div>
+            </div>
             <div class="row" v-if="dataReady">
               <div class="col-12">คุณ {{ data.profile.name + ' ' + data.profile.lastname }}</div>
               <div class="col-12 mt-2">เบอร์ {{ data.profile.phone }}</div>
@@ -95,14 +105,6 @@
               <Field type="text" class="form-control" name="lastname" placeholder="กรอกนามสกุลของท่าน" required />
             </div>
             <div class="mb-3">
-              <label for="email" class="form-label">อีเมล</label>
-              <Field type="text" class="form-control" name="email" placeholder="กรอกอีเมลของท่าน" required />
-            </div>
-            <div class="mb-3">
-              <label for="id_card" class="form-label">หมายเลข 13 หลัก</label>
-              <Field type="text" class="form-control" name="id_card" placeholder="กรอกเลข 13 หลักของท่าน" required />
-            </div>
-            <div class="mb-3">
               <label for="birthday" class="form-label">วันเกิด</label>
               <Field type="date" class="form-control" name="birthday" required />
             </div>
@@ -172,7 +174,81 @@ export default {
         })
       }
     },
-
+    async updateEmail() {
+      const { value: email } = await Swal.fire({
+        title: 'UPDATE EMAIL',
+        input: 'text',
+        inputLabel: 'กรอก EMAIL',
+        inputPlaceholder: 'EMAIL'
+      })
+      if (email) {
+        const data = {
+          email: email
+        }
+        const checkemail = await bookingService.checkemail(data)
+        if (checkemail.data.status === 'Success') {
+          const phone = JSON.parse(localStorage.getItem('Phone'))
+          const dataUpdate = {
+            phone: phone.phone,
+            email: email
+          }
+          const update = await bookingService.updateemail(dataUpdate)
+          if (update.data.status === 'Success') {
+            Swal.fire({
+              title: 'OK!',
+              text: update.data.message,
+              icon: 'success',
+              confirmButtonText: 'OK'
+            })
+          }
+        } else {
+          Swal.fire({
+            title: 'ERROR!',
+            text: checkemail.data.message,
+            icon: 'error',
+            confirmButtonText: 'OK'
+          })
+        }
+      }
+    },
+    async updateIdCard() {
+      const { value: idcard } = await Swal.fire({
+        title: 'UPDATE ID CARD',
+        input: 'text',
+        inputLabel: 'กรอกหมายเลข 13 หลัก',
+        inputPlaceholder: 'ID CARD NUMBER'
+      })
+      if (idcard) {
+        console.log('check id card')
+        const data = {
+          id_card: idcard
+        }
+        const checkid = await bookingService.checkid(data)
+        if (checkid.data.status === 'Success') {
+          const phone = JSON.parse(localStorage.getItem('Phone'))
+          const dataUpdate = {
+            phone: phone.phone,
+            id_card: idcard
+          }
+          const update = await bookingService.updateid(dataUpdate)
+          if (update.data.status === 'Success') {
+            Swal.fire({
+              title: 'OK!',
+              text: update.data.message,
+              icon: 'success',
+              confirmButtonText: 'OK'
+            })
+          }
+        } else {
+          Swal.fire({
+            title: 'ERROR!',
+            text: checkid.data.message,
+            icon: 'error',
+            confirmButtonText: 'OK'
+          })
+        }
+      }
+    },
     async updateProfile(data) {
       const phone = JSON.parse(localStorage.getItem('Phone'))
       const profile = {

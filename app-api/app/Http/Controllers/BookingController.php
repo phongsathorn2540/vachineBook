@@ -78,6 +78,29 @@ class BookingController extends Controller
         }
     }
 
+    public function updateIdCard(Request $request)
+    {
+        try {
+            $user = User::where('phone', $request->phone)->first();
+            $user->id_card = $request->id_card;
+            $user->save();
+            return response()->json(['status' => 'Success', 'message' => 'Update Success.']);
+        } catch (\Throwable$th) {
+            //throw $th;
+        }
+    }
+    public function updateEmail(Request $request)
+    {
+        try {
+            $user = User::where('phone', $request->phone)->first();
+            $user->email = $request->email;
+            $user->save();
+            return response()->json(['status' => 'Success', 'message' => 'Update Success.']);
+        } catch (\Throwable$th) {
+            //throw $th;
+        }
+    }
+
     public function bookingDetail(int $id)
     {
         try {

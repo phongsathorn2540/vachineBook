@@ -16,8 +16,8 @@ class CreateOtpTable extends Migration
         Schema::create('otp', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('ref_code');
-            $table->string('otp_num');
+            $table->string('ref_code', 128);
+            $table->string('otp_num', 128);
             $table->enum('otp_verify', ['available', 'used', 'timeout'])->default('available');
             $table->timestamps();
         });

@@ -17,7 +17,7 @@ class CreateBookingTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->enum('booking_status', ['booking', 'success', 'fail'])->default('booking');
-            $table->date('booking_date');
+            $table->date('booking_date', 128);
             $table->timestamps();
         });
     }

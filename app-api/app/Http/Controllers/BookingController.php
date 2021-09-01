@@ -5,29 +5,28 @@ namespace App\Http\Controllers;
 use App\Models\Booking;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Log;
 
 class BookingController extends Controller
 {
     public function createBooking(Request $request)
     {
-        Log::info('check request ::' . json_encode($request->all(), JSON_PRETTY_PRINT));
         try {
             $this->validate($request, [
+                'user_id' => 'required',
                 'phone' => 'required',
                 'booking_date' => 'required',
             ]);
             $user = User::where('phone', $request->phone)->first();
             $quoteBooking = Booking::where('booking_date', $request->booking_date)->count();
             if ($quoteBooking < 3000) {
-                $oldBooking = Booking::where('user_id', $user->id)->where('booking_status', 'booking')->get();
-                foreach ($oldBooking as $value) {
-                    $bookingID = Booking::find($value->id);
-                    $bookingID->booking_status = 'fail';
-                    $bookingID->save();
-                }
+                // $oldBooking = Booking::where('user_id', $user->id)->where('booking_status', 'booking')->get();
+                // foreach ($oldBooking as $value) {
+                //     $bookingID = Booking::find($value->id);
+                //     $bookingID->booking_status = 'fail';
+                //     $bookingID->save();
+                // }
                 $booking = new Booking;
-                $booking->user_id = $user->id;
+                $booking->user_id = $request->user_id;
                 $booking->booking_date = $request->booking_date;
                 $booking->save();
             }

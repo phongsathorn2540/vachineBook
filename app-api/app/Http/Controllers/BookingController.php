@@ -25,7 +25,7 @@ class BookingController extends Controller
                     $bookingID->save();
                 }
                 $booking = new Booking;
-                $booking->user_id = $request->user_id;
+                $booking->user_id = $user->user_id;
                 $booking->booking_date = $request->booking_date;
                 $booking->save();
             }

@@ -12,19 +12,18 @@ class BookingController extends Controller
     {
         try {
             $this->validate($request, [
-                'user_id' => 'required',
                 'phone' => 'required',
                 'booking_date' => 'required',
             ]);
             $user = User::where('phone', $request->phone)->first();
             $quoteBooking = Booking::where('booking_date', $request->booking_date)->count();
             if ($quoteBooking < 3000) {
-                // $oldBooking = Booking::where('user_id', $user->id)->where('booking_status', 'booking')->get();
-                // foreach ($oldBooking as $value) {
-                //     $bookingID = Booking::find($value->id);
-                //     $bookingID->booking_status = 'fail';
-                //     $bookingID->save();
-                // }
+                $oldBooking = Booking::where('user_id', $user->id)->where('booking_status', 'booking')->get();
+                foreach ($oldBooking as $value) {
+                    $bookingID = Booking::find($value->id);
+                    $bookingID->booking_status = 'fail';
+                    $bookingID->save();
+                }
                 $booking = new Booking;
                 $booking->user_id = $request->user_id;
                 $booking->booking_date = $request->booking_date;

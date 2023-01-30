@@ -1,8 +1,6 @@
 # vachineBook
 มินิโปรเจคเป็นการฝึกพัฒนา res-api (laravel Lumen) กับ vue 3
 
-ตัวอย่าง https://vaccinebooking.thornza007.com/
-
 วีดีโอรีวิว https://drive.google.com/file/d/17fJBrQ-PJ_vl8heg1COJN2ctP85lV_-b/view?usp=sharing
 
 Folder app-api 
